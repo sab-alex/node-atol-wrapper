@@ -36,6 +36,7 @@ public:
   static NAN_METHOD(ProcessJson);
   static NAN_METHOD(FnReport);
   static NAN_METHOD(FindLastDocument);
+  static NAN_METHOD(DateTime);
 
   static NAN_GETTER(HandleGetters);
   static NAN_SETTER(HandleSetters);

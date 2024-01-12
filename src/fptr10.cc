@@ -301,3 +301,25 @@ void Fptr10::workerFinished(Fptr10* self) {
     Nan::AsyncQueueWorker(nextWorker);
   }
 }
+
+NAN_METHOD(Fptr10::DateTime) {
+    Fptr10* self = Nan::ObjectWrap::Unwrap<Fptr10>(info.This());
+    libfptr_set_param_int(self->fptr, LIBFPTR_PARAM_DATA_TYPE, LIBFPTR_DT_DATE_TIME);
+    v8::Local<v8::Value> error;
+    if(checkError(self->fptr, libfptr_fn_query_data(self->fptr), error)){
+     return Nan::ThrowError(error);
+    }
+
+    int year, month, day, hour, minute, second;
+    libfptr_get_param_datetime(self->fptr, LIBFPTR_PARAM_DATE_TIME, &year, &month, &day, &hour, &minute, &second);
+
+    v8::Local<v8::Object> date = Nan::New<v8::Object>();
+    Nan::Set(date, Nan::New("year").ToLocalChecked(), Nan::New(year));
+    Nan::Set(date, Nan::New("month").ToLocalChecked(), Nan::New(month));
+    Nan::Set(date, Nan::New("day").ToLocalChecked(), Nan::New(day));
+    Nan::Set(date, Nan::New("hour").ToLocalChecked(), Nan::New(hour));
+    Nan::Set(date, Nan::New("minute").ToLocalChecked(), Nan::New(minute));
+    Nan::Set(date, Nan::New("second").ToLocalChecked(), Nan::New(second));
+
+    info.GetReturnValue().Set(date);
+}

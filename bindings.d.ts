@@ -62,6 +62,7 @@ export declare class Fptr10 {
   processJsonAsync(json: unknown, cb: (error: any, result: any) => void): void
   fnReport(type: number): any
   findLastDocument(): LastDocument
+  dateTime(): any
 }
 
 export enum Port {
